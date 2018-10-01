@@ -1,0 +1,4 @@
+xtcf            ./traj.xtc                  // the xtc file
+natoms_mol      3                           // should be 3 if only OH, HW1 and HW2 are in xtc file to be processed, should be 4 if M site is already there
+outf            trajMsite.xtc               // the name to prepend to the output files
+watermodel      e3b3                        // the water model tip4p2005, tip4p, e3b2, e3b3
