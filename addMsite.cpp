@@ -89,7 +89,7 @@ int main( int argc, char* argv[] )
 {
 
     int     currentSample, frameno, tcfpoint;
-    float   currentTime, tcfTime;
+    float   currentTime, tcfTime, startingtime;
 
     // Check program input
     if ( argc != 2 ){
@@ -117,13 +117,14 @@ int main( int argc, char* argv[] )
         }
         fflush(stdout);
         reader.read_next_frame(); // read current frame
+        if ( currentSample == 0 ) startingtime = reader.gmxtime;
         
         int natoms = reader.nmol*4;
         reader.addMsite(); // add msite
 
         // write to new xtc file
-        write_xtc( xtcout, natoms , reader.step, reader.gmxtime, reader.box, \
-                   reader.xnew, reader.prec );
+        float gmxtime = (reader.gmxtime - startingtime); // convert time to have right units and start from zero
+        write_xtc( xtcout, natoms , reader.step, gmxtime, reader.box, reader.xnew, reader.prec );
     }
     xdrfile_close( xtcout );
     cout << endl << "DONE!" << endl;
